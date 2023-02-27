@@ -690,7 +690,7 @@ dependencies = [
  "provisioner-app",
  "rand_core",
  "rtt-target",
- "se050",
+ "se050 0.0.1 (git+https://github.com/robertstojicptb/se050)",
  "serde",
  "toml",
  "trussed",
@@ -1653,6 +1653,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "se050"
+version = "0.0.1"
+source = "git+https://github.com/robertstojicptb/se050#a0ebc2fdd4d5b3820af28604d27963b45acfe5bb"
+dependencies = [
+ "byteorder",
+ "crc16",
+ "delog",
+ "embedded-hal",
+ "heapless 0.7.16",
+]
+
+[[package]]
 name = "semver"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1867,7 +1879,7 @@ dependencies = [
  "postcard",
  "rand_core",
  "salty",
- "se050",
+ "se050 0.0.1 (git+https://github.com/jnordholz/se050)",
  "serde",
  "serde-indexed",
  "sha-1",

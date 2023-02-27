@@ -58,12 +58,15 @@ Unless you explicitly state otherwise, any contribution intentionally submitted 
 
 Clone the firmware repository from Gitlab/ Github to your desktop.
 
+Work in follwing branch:
+
+proto2-dev2
 
 Work in following folder: 
 
-nitrokey-3-firmware-proto2-power-test/runners/embedded 
+Nitrokey-nitrokey-3-firmware/tree/proto2-dev2/runners/embedded
 
-$ cd nitrokey-3-firmware-proto2-power-test/runners/embedded
+$ cd Nitrokey-nitrokey-3-firmware/runners/embedded
 
 #
 Prototype 1:
@@ -127,6 +130,40 @@ Display the serial numbers of all the debuggers connected to the PC.
 
 $ nrfjprog -i
 
+#############
+## Test the Sleep Modus Proto2 and Proto 1
+
+
+# Proto-2 Board
+Disconnect the USB Connection from the Multi-Factor Authentication Device (USB key).
+
+Disconnect the Debugger Connection  from the Multi-Factor Authentication Device (USB key).
+
+Connect an Ampere-Meter or Multi Metere (Current Measurement Modus, mA and uA Range) to the Measurement Pins on the Battery of the Device.
+
+The Configuration should deliver a Current in of 30mA in Normal Operationg Modus.(Proto2 -Board)
+
+Press Button 4 to start the Sleep Modus-
+
+The Configuration should deliver a Current  of 10uA in Sleep Modus.(Proto2 -Board)
+
+Connect the USB Connection to get back to  Normal Operation Mode.
+
+
+# Proto-1 Board
+Disconnect the USB Connection from the Multi-Factor Authentication Device (USB key).
+
+Disconnect the Debugger Connection  from the Multi-Factor Authentication Device (USB key).
+
+Connect an Ampere-Meter or Multi Metere (Current Measurement Modus, mA and uA Range) to the Measurement Pins on the Battery of the Device.
+
+The Configuration should deliver a Current in of 43,5mA in Normal Operationg Modus.(Proto1 -Board)
+
+Press Button 4 to start the Sleep Modus-
+
+The Configuration should deliver a Current  of 485 uA in Sleep Modus.(Proto1 -Board)
+
+Connect the USB Connection to get back to  Normal Operation Mode.
 
 
 #############
@@ -626,6 +663,8 @@ $ sudo udevadm control --reload-rules
 #
 #
 #
+
+
 
 
 
