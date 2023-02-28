@@ -391,7 +391,7 @@ mod app {
             trace!("usb-");
         }
     }
-
+/*  
     #[task(priority = 1, capacity = 2, shared = [trussed, trussed_client], local = [ui_counter])]
     fn ui(ctx: ui::Context, op: UIOperation) {
         //trace!("UI");
@@ -492,3 +492,183 @@ mod app {
         }
     }
 }
+
+*/
+
+
+
+    #[task(priority = 1, capacity = 2, shared = [trussed, trussed_client], local = [ui_counter])]
+    fn ui(ctx: ui::Context, op: UIOperation) {
+        //trace!("UI");
+        use trussed::client::GuiClient;
+        let ui::LocalResources { ui_counter: cnt } = ctx.local;
+        let ui::SharedResources {
+            mut trussed,
+            trussed_client: mut cl,
+        } = ctx.shared;
+
+        //trace!("update ui");
+        trussed.lock(|trussed| {
+            trussed.update_ui();
+        });
+
+        match op {
+            UIOperation::Animate => {
+                trace!("UI {} {}", *cnt, *cnt % 4);
+                cl.lock(|cl| match *cnt {
+                    0 => {
+                        for y in 0..6 {
+                            for x in 0..3 {
+                                syscall!(cl.client.draw_sprite(
+                                    120 - 78 + x * 52,
+                                    67 - 45 + y * 15,
+                                    2,
+                                    y * 3 + x
+                                ));
+                            }
+                        }
+                        /* SE050 Test Sequence */
+
+                        Delogger::flush();
+                        trace!("SE050 Test GetRandom(32)");
+                        let _rnd = try_syscall!(cl.client.random_bytes(32));
+                        trace!("RND: {:?}", _rnd);
+
+                        // Delogger::flush();
+                        // trace!("SE050 Test GetRandom(320)");
+                        // let _rnd = try_syscall!(cl.client.random_bytes(320));
+                        // trace!("RND: {:?}", _rnd);
+
+                        // Delogger::flush();
+                        // syscall!(cl.client.set_service_backends(Vec::from_slice(&[ServiceBackends::Software]).unwrap()));
+                        // let rnd = syscall!(cl.client.random_bytes(32));
+                        // trace!("RND: {:?}", rnd.bytes);
+                    }
+                    20 => {
+                        syscall!(cl.client.draw_filled_rect(120 - 78, 67 - 45, 33, 90, 0x0000_u16));
+                        syscall!(cl.client.draw_filled_rect(120 + 45, 67 - 45, 33, 90, 0x0000_u16));
+                        for y in 0..3 {
+                            for x in 0..3 {
+                                syscall!(cl.client.draw_sprite(
+                                    120 - 45 + x * 30,
+                                    67 - 45 + y * 30,
+                                    4,
+                                    y * 3 + x
+                                ));
+                            }
+                        }
+                    }
+                    40 => {
+                        syscall!(cl.client.draw_filled_rect(0, 0, 240, 135, 0x0000_u16));
+                        // syscall!(cl.client.gui_control(trussed::types::GUIControlCommand::Rotate(2)));
+                    }
+                    60 => {
+                        trace!("Gen P256");
+                        let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
+                        trace!("P256: {:?}", key_res);
+                        if let Ok(keyid) = key_res {
+                            trace!("P256 KeyID: {:?}", &keyid.key);
+                        }
+                    }
+                    _ => {}
+                });
+                *cnt += 1;
+
+                ui::spawn_after(RtcDuration::from_ms(125), UIOperation::Animate).ok();
+            }
+
+            /*  
+            UIOperation::UpdateButtons => {
+                let mut bs: [u8; 8] = [0; 8];
+
+                cl.lock(|cl| {
+                    syscall!(cl.client.update_button_state());
+                    let st = syscall!(cl.client.get_button_state(0xff)).states;
+                    bs.copy_from_slice(&st[0..8]);
+                });
+                trace!("UI Btn {:?}", &bs);
+               #[cfg(feature = "has_poweroff")]
+                if bs[3] != 0 {                  
+                    cl.lock(|cl| {
+                  //  syscall!(cl.client.gui_control(trussed::types::GUIControlCommand::PowerOff)); //ERWEITERT: AUSKOMMENTIERT da im logger meldung panicked at 'no errors: RequestNotAvailable', src/bin/app-nrf.rs:486:25
+                       
+                    });
+                    ERL::soc::board::power_off();
+                }
+            }
+
+            */
+
+
+
+
+
+            UIOperation::UpdateButtons => {
+                let mut bs: [u8; 8] = [0; 8];
+
+                cl.lock(|cl| {
+                    syscall!(cl.client.update_button_state());
+                    let st = syscall!(cl.client.get_button_state(0xff)).states;
+                    bs.copy_from_slice(&st[0..8]);
+                });
+                trace!("UI Btn {:?}", &bs);
+               #[cfg(feature = "has_poweroff")]
+                if bs[3] != 0 {                  
+                    cl.lock(|cl| {
+                  //  syscall!(cl.client.gui_control(trussed::types::GUIControlCommand::PowerOff)); //ERWEITERT: AUSKOMMENTIERT da im logger meldung panicked at 'no errors: RequestNotAvailable', src/bin/app-nrf.rs:486:25
+                       
+                    });
+                    ERL::soc::board::power_off();
+                }
+
+   
+                    
+                    if bs[1] != 0 {     
+
+
+
+                        cl.lock(|cl| {
+                     
+                            trace!("Gen P256");
+                            let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
+                            trace!("P256: {:?}", key_res);
+                            if let Ok(keyid) = key_res {
+                                trace!("P256 KeyID: {:?}", &keyid.key);
+                            }
+
+                            trace!("SE050 Test GetRandom(32)");
+                            let _rnd = try_syscall!(cl.client.random_bytes(32));
+                            trace!("RND: {:?}", _rnd);
+
+
+
+
+
+
+
+                        });
+                        
+                    }
+
+
+
+
+
+            }
+
+
+
+
+
+        }
+
+
+        
+    }
+}
+
+
+
+
+
+
