@@ -633,17 +633,16 @@ mod app {
                             let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
                             trace!("P256: {:?}", key_res);
                             if let Ok(keyid) = key_res {
-                                trace!("P256 KeyID: {:?}", &keyid.key);
+                                trace!("P256 KeyID: {:?} \n", &keyid.key);
                             }
-
+ 
                             trace!("SE050 Test GetRandom(32)");
                             let _rnd = try_syscall!(cl.client.random_bytes(32));
-                            trace!("RND: {:?}", _rnd);
+                            trace!("RND: {:?} \n", _rnd);
 
 
-
-
-
+                           
+ 
 
 
                         });
