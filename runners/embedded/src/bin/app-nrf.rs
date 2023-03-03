@@ -562,14 +562,14 @@ mod app {
                         syscall!(cl.client.draw_filled_rect(0, 0, 240, 135, 0x0000_u16));
                         // syscall!(cl.client.gui_control(trussed::types::GUIControlCommand::Rotate(2)));
                     }
-                    60 => {
+                /*      60 => {   
                         trace!("Gen P256");
                         let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
                         trace!("P256: {:?}", key_res);
                         if let Ok(keyid) = key_res {
                             trace!("P256 KeyID: {:?}", &keyid.key);
                         }
-                    }
+                    }*/
                     _ => {}
                 });
                 *cnt += 1;
@@ -621,7 +621,7 @@ mod app {
                     ERL::soc::board::power_off();
                 }
 
-   
+   //CRYPTO PRIMITIVES TEST
                     
                     if bs[1] != 0 {     
 
@@ -636,14 +636,53 @@ mod app {
                                 trace!("P256 KeyID: {:?} \n", &keyid.key);
                             }
  
+
                             trace!("SE050 Test GetRandom(32)");
                             let _rnd = try_syscall!(cl.client.random_bytes(32));
                             trace!("RND: {:?} \n", _rnd);
 
+/*  
+                            trace!("Gen ed255_key_pair");
+                            let key_res = try_syscall!(cl.client.generate_key(Mechanism::Ed255, StorageAttributes::new()));
+                            trace!("Ed255 KeyID : {:?}", key_res);
+                            if let Ok(keyid) = key_res {
+                                trace!("Ed255 KeyID: {:?} \n", &keyid.key);
+                            }
+*/
 
-                           
+                            trace!("Gen ed255_key_pair");
+                            let key_res_2 = try_syscall!(cl.client.generate_key(Mechanism::Ed255, StorageAttributes::new()));
+                            trace!("Ed255 KeyID : {:?}", key_res_2);
+                            if let Ok(keyid) = key_res_2 {
+                                trace!("Ed255 KeyID: {:?} \n", &keyid.key);
+                            }
+
+
+
+
+
+
+
+/*  
+
+                            trace!("Gen Aes256Cbc");
+                            let key_res = try_syscall!(cl.client.generate_key(Mechanism::Aes256Cbc, StorageAttributes::new()));
+                            trace!("Aes256Cbc: {:?}", key_res);
+                            if let Ok(keyid) = key_res {
+                                trace!("P256 KeyID: {:?} \n", &keyid.key);
+                            }
+*/
+
+
+/* 
+                            trace!("Gen Aes256Cbc");
+                            let key_res = try_syscall!(cl.client.generate_key(Mechanism::Aes256Cbc, StorageAttributes::new()));
+                            trace!("Aes256Cbc: {:?}", key_res );
+                            if let Ok(keyid) = key_res  {
+                                trace!("Aes256Cbc KeyID: {:?} \n", &keyid.key);
+                            }
  
-
+*/
 
                         });
                         
