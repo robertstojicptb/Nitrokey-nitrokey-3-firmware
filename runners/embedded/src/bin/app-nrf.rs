@@ -26,7 +26,7 @@ mod app {
     use trussed::{
         client::{GuiClient, CryptoClient, PollClient},
         syscall, try_syscall,
-        types::Vec, types::ServiceBackends, Interchange, types::Mechanism, types::StorageAttributes
+        types::Vec, types::ServiceBackends, Interchange, types::{Mechanism, KeyId}, types::StorageAttributes
     };
 
     static mut global_delay_timer4: Option<Timer::<nrf52840_pac::TIMER4>> = None;
@@ -628,7 +628,12 @@ mod app {
 
 
                         cl.lock(|cl| {
-                     
+                      
+                            trace!("SE050 Test GetRandom(32)");
+                            let _rnd = try_syscall!(cl.client.random_bytes(32));
+                            trace!("RND: {:?} \n", _rnd);
+
+ 
                             trace!("Gen P256");
                             let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
                             trace!("P256: {:?}", key_res);
@@ -637,9 +642,34 @@ mod app {
                             }
  
 
-                            trace!("SE050 Test GetRandom(32)");
-                            let _rnd = try_syscall!(cl.client.random_bytes(32));
+                            trace!("Gen ed255_key_pair");
+                            let key_res_2 = try_syscall!(cl.client.generate_key(Mechanism::Ed255, StorageAttributes::new()));
+                            trace!("Ed255 KeyID : {:?}", key_res_2);
+                            if let Ok(keyid) = key_res_2 {
+                                trace!("Ed255 KeyID: {:?} \n", &keyid.key);
+                            }
+
+/* 
+
+                            trace!("SE050 Test check_object_exists_p256");
+                            let _rnd = try_syscall!(cl.client.exists(Mechanism::P256, KeyId::new(&a)));
                             trace!("RND: {:?} \n", _rnd);
+
+*/
+
+/* 
+ 
+                            trace!("P256 Key Pair Exist");
+                         
+                          //  let result = try_syscall!(cl.client.exists(Mechanism::P256, StorageAttributes::new()));
+                            let result = try_syscall!(cl.client.exists(Mechanism::P256, KeyId::new()));
+                            trace!("P256 exist : {:?}", result);
+
+                            */
+                         /*     if let Ok(keyid) = key_res_2 {
+                                trace!("Ed255 KeyID: {:?} \n", &keyid.key);
+                            }
+*/
 
 /*  
                             trace!("Gen ed255_key_pair");
@@ -649,17 +679,6 @@ mod app {
                                 trace!("Ed255 KeyID: {:?} \n", &keyid.key);
                             }
 */
-
-                            trace!("Gen ed255_key_pair");
-                            let key_res_2 = try_syscall!(cl.client.generate_key(Mechanism::Ed255, StorageAttributes::new()));
-                            trace!("Ed255 KeyID : {:?}", key_res_2);
-                            if let Ok(keyid) = key_res_2 {
-                                trace!("Ed255 KeyID: {:?} \n", &keyid.key);
-                            }
-
-
-
-
 
 
 
