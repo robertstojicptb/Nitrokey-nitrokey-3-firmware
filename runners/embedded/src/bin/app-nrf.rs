@@ -28,7 +28,8 @@ mod app {
         syscall, try_syscall,
         types::Vec, types::ServiceBackends, Interchange, types::{Mechanism, KeyId}, types::StorageAttributes
     };
-
+    use asm_delay::AsmDelay; //ERWEITERT
+    use asm_delay::bitrate::*; //ERWEITERT
     static mut global_delay_timer4: Option<Timer::<nrf52840_pac::TIMER4>> = None;
     #[cfg(feature = "hwcrypto_se050")]
     static mut global_wrapped_delay_timer4: Option<se050::DelayWrapper> = None;
@@ -506,7 +507,7 @@ mod app {
             mut trussed,
             trussed_client: mut cl,
         } = ctx.shared;
-
+        let mut d = AsmDelay::new(asm_delay::bitrate::U32BitrateExt::mhz(64));
         //trace!("update ui");
         trussed.lock(|trussed| {
             trussed.update_ui();
@@ -570,7 +571,7 @@ mod app {
                             trace!("P256 KeyID: {:?}", &keyid.key);
                         }
                     }*/
-                    _ => {}
+                     _ => {}
                 });
                 *cnt += 1;
 
@@ -628,20 +629,28 @@ mod app {
 
 
                         cl.lock(|cl| {
-                      
+                           
+                            Delogger::flush();
+                            #[cfg(feature = "hwcrypto_se050")]
+
                             trace!("SE050 Test GetRandom(32)");
                             let _rnd = try_syscall!(cl.client.random_bytes(32));
                             trace!("RND: {:?} \n", _rnd);
+    
+                            d.delay_ms(10u32);
 
- 
+
+                           Delogger::flush();
+                             #[cfg(feature = "hwcrypto_se050")]
                             trace!("Gen P256");
                             let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
                             trace!("P256: {:?}", key_res);
                             if let Ok(keyid) = key_res {
                                 trace!("P256 KeyID: {:?} \n", &keyid.key);
                             }
- 
-
+                            d.delay_ms(10u32);
+ /*  
+                            Delogger::flush();
                             trace!("Gen ed255_key_pair");
                             let key_res_2 = try_syscall!(cl.client.generate_key(Mechanism::Ed255, StorageAttributes::new()));
                             trace!("Ed255 KeyID : {:?}", key_res_2);
@@ -649,6 +658,8 @@ mod app {
                                 trace!("Ed255 KeyID: {:?} \n", &keyid.key);
                             }
 
+                            */
+//
 /* 
 
                             trace!("SE050 Test check_object_exists_p256");
