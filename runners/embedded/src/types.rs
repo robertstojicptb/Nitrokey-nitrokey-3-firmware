@@ -147,7 +147,7 @@ pub trait TrussedApp: Sized {
         let client_backends =
             trussed::types::Vec::from_slice(&[trussed::types::ServiceBackends::SE050(trussed::service::backend_se050::Se050Parameters {}),
                 trussed::types::ServiceBackends::Software]); 
-        #[cfg(not(feature = "hwcrypto_se050"))] 
+         #[cfg(not(feature = "hwcrypto_se050"))] 
         let client_backends =
             trussed::types::Vec::from_slice(&[trussed::types::ServiceBackends::Software]);
 

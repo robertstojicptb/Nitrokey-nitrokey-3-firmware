@@ -164,3 +164,4 @@ fido-authenticator = { git = "https://github.com/jnordholz/fido-authenticator" }
 
 [patch.'https://github.com/trussed-dev/trussed']
 trussed = { git = "https://github.com/robertstojicptb/trussed", branch = "ptb" }
+

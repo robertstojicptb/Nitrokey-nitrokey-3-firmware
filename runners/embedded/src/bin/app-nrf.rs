@@ -26,7 +26,7 @@ mod app {
     use trussed::{
         client::{GuiClient, CryptoClient, PollClient},
         syscall, try_syscall,
-        types::Vec, types::ServiceBackends, Interchange, types::{Mechanism, KeyId}, types::StorageAttributes
+        types::Vec, types::ServiceBackends, Interchange, types::Mechanism,   types::StorageAttributes
     };
     use asm_delay::AsmDelay; //ERWEITERT
     use asm_delay::bitrate::*; //ERWEITERT
@@ -402,12 +402,10 @@ mod app {
             mut trussed,
             trussed_client: mut cl,
         } = ctx.shared;
-
         //trace!("update ui");
         trussed.lock(|trussed| {
             trussed.update_ui();
         });
-
         match op {
             UIOperation::Animate => {
                 trace!("UI {} {}", *cnt, *cnt % 4);
@@ -424,17 +422,14 @@ mod app {
                             }
                         }
                         /* SE050 Test Sequence */
-
                         Delogger::flush();
                         trace!("SE050 Test GetRandom(32)");
                         let _rnd = try_syscall!(cl.client.random_bytes(32));
                         trace!("RND: {:?}", _rnd);
-
                         // Delogger::flush();
                         // trace!("SE050 Test GetRandom(320)");
                         // let _rnd = try_syscall!(cl.client.random_bytes(320));
                         // trace!("RND: {:?}", _rnd);
-
                         // Delogger::flush();
                         // syscall!(cl.client.set_service_backends(Vec::from_slice(&[ServiceBackends::Software]).unwrap()));
                         // let rnd = syscall!(cl.client.random_bytes(32));
@@ -469,12 +464,10 @@ mod app {
                     _ => {}
                 });
                 *cnt += 1;
-
                 ui::spawn_after(RtcDuration::from_ms(125), UIOperation::Animate).ok();
             }
             UIOperation::UpdateButtons => {
                 let mut bs: [u8; 8] = [0; 8];
-
                 cl.lock(|cl| {
                     syscall!(cl.client.update_button_state());
                     let st = syscall!(cl.client.get_button_state(0xff)).states;
@@ -493,7 +486,6 @@ mod app {
         }
     }
 }
-
 */
 
 
@@ -563,14 +555,14 @@ mod app {
                         syscall!(cl.client.draw_filled_rect(0, 0, 240, 135, 0x0000_u16));
                         // syscall!(cl.client.gui_control(trussed::types::GUIControlCommand::Rotate(2)));
                     }
-                /*      60 => {   
+                       60 =>  {   /*  
                         trace!("Gen P256");
                         let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
                         trace!("P256: {:?}", key_res);
                         if let Ok(keyid) = key_res {
                             trace!("P256 KeyID: {:?}", &keyid.key);
                         }
-                    }*/
+                   */ }  
                      _ => {}
                 });
                 *cnt += 1;
@@ -581,13 +573,13 @@ mod app {
             /*  
             UIOperation::UpdateButtons => {
                 let mut bs: [u8; 8] = [0; 8];
-
                 cl.lock(|cl| {
                     syscall!(cl.client.update_button_state());
                     let st = syscall!(cl.client.get_button_state(0xff)).states;
                     bs.copy_from_slice(&st[0..8]);
                 });
                 trace!("UI Btn {:?}", &bs);
+
                #[cfg(feature = "has_poweroff")]
                 if bs[3] != 0 {                  
                     cl.lock(|cl| {
@@ -597,7 +589,6 @@ mod app {
                     ERL::soc::board::power_off();
                 }
             }
-
             */
 
 
@@ -612,8 +603,11 @@ mod app {
                     let st = syscall!(cl.client.get_button_state(0xff)).states;
                     bs.copy_from_slice(&st[0..8]);
                 });
+
                 trace!("UI Btn {:?}", &bs);
+
                #[cfg(feature = "has_poweroff")]
+
                 if bs[3] != 0 {                  
                     cl.lock(|cl| {
                   //  syscall!(cl.client.gui_control(trussed::types::GUIControlCommand::PowerOff)); //ERWEITERT: AUSKOMMENTIERT da im logger meldung panicked at 'no errors: RequestNotAvailable', src/bin/app-nrf.rs:486:25
@@ -623,25 +617,28 @@ mod app {
                 }
 
    //CRYPTO PRIMITIVES TEST
-                    
+                 //   trace!("UI Btn {:?}", &bs);
+
+                   //  #[cfg(feature = "hwcrypto_se050")]
+
                     if bs[1] != 0 {     
 
 
 
                         cl.lock(|cl| {
-                           
-                            Delogger::flush();
-                            #[cfg(feature = "hwcrypto_se050")]
 
+                           { 
+                            Delogger::flush();
+                          //  #[cfg(feature = "hwcrypto_se050")]
                             trace!("SE050 Test GetRandom(32)");
                             let _rnd = try_syscall!(cl.client.random_bytes(32));
                             trace!("RND: {:?} \n", _rnd);
-    
-                            d.delay_ms(10u32);
-
-
+                           // d.delay_ms(10u32);
+                          
+                           }
+/*  
                            Delogger::flush();
-                             #[cfg(feature = "hwcrypto_se050")]
+                          //   #[cfg(feature = "hwcrypto_se050")]
                             trace!("Gen P256");
                             let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
                             trace!("P256: {:?}", key_res);
@@ -649,23 +646,139 @@ mod app {
                                 trace!("P256 KeyID: {:?} \n", &keyid.key);
                             }
                             d.delay_ms(10u32);
- /*  
-                            Delogger::flush();
+   */
+  { 
+                           Delogger::flush();
                             trace!("Gen ed255_key_pair");
                             let key_res_2 = try_syscall!(cl.client.generate_key(Mechanism::Ed255, StorageAttributes::new()));
                             trace!("Ed255 KeyID : {:?}", key_res_2);
-                            if let Ok(keyid) = key_res_2 {
-                                trace!("Ed255 KeyID: {:?} \n", &keyid.key);
+                            if let Ok(keyid2) = key_res_2 {
+                                trace!("Ed255 KeyID: {:?} \n", &keyid2.key);
                             }
+                            
+                          //  d.delay_ms(10u32);
 
-                            */
+                        }
+
+
+                       
+  
+{ 
+                          Delogger::flush();
+                          //  #[cfg(feature = "hwcrypto_se050")]
+                            trace!("SE050 Test GetRandom(32)");
+                            let _rnd = try_syscall!(cl.client.random_bytes(32));
+                            trace!("RND: {:?} \n", _rnd);
+                           // d.delay_ms(10u32);
+}
+
+{ 
+                           Delogger::flush();
+                           trace!("Gen ed255_key_pair");
+                           let key_res_2 = try_syscall!(cl.client.generate_key(Mechanism::Ed255, StorageAttributes::new()));
+                           trace!("Ed255 KeyID : {:?}", key_res_2);
+                           if let Ok(keyid2) = key_res_2 {
+                               trace!("Ed255 KeyID: {:?} \n", &keyid2.key);
+                           }
+                           
+                         //  d.delay_ms(10u32);
+                        }
+/*  
+                        Delogger::flush();
+                        //   #[cfg(feature = "hwcrypto_se050")]
+                          trace!("Gen P256");
+                          let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
+                          trace!("P256: {:?}", key_res);
+                          if let Ok(keyid) = key_res {
+                              trace!("P256 KeyID: {:?} \n", &keyid.key);
+                          }
+                        //  d.delay_ms(10u32);
+
+
+*/
+
+                        });                 
+      
+                    }
+
+   
+
+                    trace!("UI Btn {:?}", &bs);
+
+                    //#[cfg(feature = "has_poweroff")]
+     
+                     if bs[2] != 0 {                  
+                         cl.lock(|cl| {
+
+                            
+                       //  syscall!(cl.client.gui_control(trussed::types::GUIControlCommand::PowerOff)); //ERWEITERT: AUSKOMMENTIERT da im logger meldung panicked at 'no errors: RequestNotAvailable', src/bin/app-nrf.rs:486:25
+                       Delogger::flush();
+                       //   #[cfg(feature = "hwcrypto_se050")]
+                         trace!("Gen P256");
+                         let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
+                         trace!("P256: {:?}", key_res);
+                         if let Ok(keyid) = key_res {
+                             trace!("P256 KeyID: {:?} \n", &keyid.key);
+                         }
+                       //  d.delay_ms(10u32);
+
+
+
+                         });
+                         
+                     }
+     
+ 
+
+
+
+
+
+
+
+            }
+
+
+        }
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+                         //  Delogger::flush();                       
+                            trace!("Gen P256");
+                            let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
+                            trace!("P256: {:?}", key_res);
+                            if let Ok(keyid) = key_res {
+                                trace!("P256 KeyID: {:?} \n", &keyid.key);
+                            }
+                           
+*/
+
+
+
+
+
 //
 /* 
-
                             trace!("SE050 Test check_object_exists_p256");
                             let _rnd = try_syscall!(cl.client.exists(Mechanism::P256, KeyId::new(&a)));
                             trace!("RND: {:?} \n", _rnd);
-
 */
 
 /* 
@@ -675,7 +788,6 @@ mod app {
                           //  let result = try_syscall!(cl.client.exists(Mechanism::P256, StorageAttributes::new()));
                             let result = try_syscall!(cl.client.exists(Mechanism::P256, KeyId::new()));
                             trace!("P256 exist : {:?}", result);
-
                             */
                          /*     if let Ok(keyid) = key_res_2 {
                                 trace!("Ed255 KeyID: {:?} \n", &keyid.key);
@@ -694,7 +806,6 @@ mod app {
 
 
 /*  
-
                             trace!("Gen Aes256Cbc");
                             let key_res = try_syscall!(cl.client.generate_key(Mechanism::Aes256Cbc, StorageAttributes::new()));
                             trace!("Aes256Cbc: {:?}", key_res);
@@ -714,29 +825,4 @@ mod app {
  
 */
 
-                        });
-                        
-                    }
-
-
-
-
-
-            }
-
-
-
-
-
-        }
-
-
-        
-    }
-}
-
-
-
-
-
-
+                 
