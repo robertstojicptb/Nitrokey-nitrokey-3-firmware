@@ -710,7 +710,7 @@ mod app {
                      if bs[2] != 0 {                  
                          cl.lock(|cl| {
 
-                            
+                            //fff
                        //  syscall!(cl.client.gui_control(trussed::types::GUIControlCommand::PowerOff)); //ERWEITERT: AUSKOMMENTIERT da im logger meldung panicked at 'no errors: RequestNotAvailable', src/bin/app-nrf.rs:486:25
                        Delogger::flush();
                        //   #[cfg(feature = "hwcrypto_se050")]
