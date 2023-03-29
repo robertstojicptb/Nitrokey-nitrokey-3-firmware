@@ -1643,7 +1643,7 @@ checksum = "d29ab0c6d3fc0ee92fe66e2d99f700eab17a8d57d1c1d3b748380fb20baa78cd"
 [[package]]
 name = "se050"
 version = "0.0.1"
-source = "git+https://github.com/robertstojicptb/se050#03ef7bbc8dcaef5d9818b058bc2b955a2aa5d4e0"
+source = "git+https://github.com/robertstojicptb/se050#a0df6ee6962935971d158c4d81e7b6f1efcd1e49"
 dependencies = [
  "byteorder",
  "crc16",
@@ -1841,7 +1841,7 @@ dependencies = [
 [[package]]
 name = "trussed"
 version = "0.1.0"
-source = "git+https://github.com/robertstojicptb/trussed?branch=ptb#f291562bb993a8e7facfb13e4e0bbccc69d1e422"
+source = "git+https://github.com/robertstojicptb/trussed?branch=ptb#f282348670c2741c0f62370ba4a3ab6308e66223"
 dependencies = [
  "aes",
  "bitflags",

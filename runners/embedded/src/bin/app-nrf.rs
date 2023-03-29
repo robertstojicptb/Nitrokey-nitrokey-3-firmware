@@ -947,7 +947,7 @@ mod app {
                     cl.lock(|cl| {                  
                                         
                         trace!("SE050 Test check_object_exist(&[0x20, 0xe8, 0xa1, 0x02],");
-                        let _rnd = try_syscall!(cl.client.random_bytes(60));
+                        let _rnd = try_syscall!(cl.client.random_bytes(1));
                         trace!("Object Exist Result: {:?} \n", _rnd);
 
                     });
