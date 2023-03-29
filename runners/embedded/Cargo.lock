@@ -1643,7 +1643,7 @@ checksum = "d29ab0c6d3fc0ee92fe66e2d99f700eab17a8d57d1c1d3b748380fb20baa78cd"
 [[package]]
 name = "se050"
 version = "0.0.1"
-source = "git+https://github.com/robertstojicptb/se050#a0df6ee6962935971d158c4d81e7b6f1efcd1e49"
+source = "git+https://github.com/robertstojicptb/se050#73becbaedf094eba19bda805b25ee0a264322709"
 dependencies = [
  "byteorder",
  "crc16",

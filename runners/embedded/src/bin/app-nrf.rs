@@ -943,7 +943,15 @@ mod app {
 
                 if bs[3] != 0 {     
 
-	                //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x02], self.delay,);
+	                //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
+                    cl.lock(|cl| {                  
+                                        
+                        trace!("SE050 Test check_object_exist(&[0x20, 0xe8, 0xa1, 0x01],");
+                        let _rnd = try_syscall!(cl.client.random_bytes(1));
+                        trace!("Object Exist Result: {:?} \n", _rnd);
+
+                    });
+
                     cl.lock(|cl| {                  
                                         
                         trace!("SE050 Test check_object_exist(&[0x20, 0xe8, 0xa1, 0x02],");
@@ -951,7 +959,6 @@ mod app {
                         trace!("Object Exist Result: {:?} \n", _rnd);
 
                     });
-
                                        
                      }
  
@@ -969,167 +976,3 @@ mod app {
 
 }
 
-
-
-/* 
-                     cl.lock(|cl| {
-                   
-                         trace!("SE050 Test GetRandom(32)");
-                         let _rnd = try_syscall!(cl.client.random_bytes(32));
-                       trace!("RND: {:?} \n", _rnd);
-
-                    });     
-
-                    */  
-
-                      /*        
-                    cl.lock(|cl| {
-   
-     
-                        trace!("Gen P256");
-                        let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
-                        trace!("P256: {:?}", key_res);
-                        if let Ok(keyid) = key_res {
-                            trace!("P256 KeyID: {:?} \n", &keyid.key);
-                        }
-
-                     });   
-
-                   */ 
-
-
-
-/* 
-                        cl.lock(|cl| {
-   
-                           
-
-                            trace!("Gen P256");
-                            let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
-                            trace!("P256: {:?}", key_res);
-                            if let Ok(keyid) = key_res {
-                                trace!("P256 KeyID: {:?} \n", &keyid.key);
-                            }
-    
-                        });    
-
-
-*/
-
-
-  /*  
-                       cl.lock(|cl| {
-
-                  
-                   
-                            trace!("SE050 Test GetRandom(20)");
-                            let _rnd = try_syscall!(cl.client.random_bytes(20));
-                            trace!("RND: {:?} \n", _rnd);
-   
-                        });
-
- */
-
-
-/* 
-
-                        cl.lock(|cl| {
-   
-                           
-
-                        trace!("Gen P256");
-                        let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
-                        trace!("P256: {:?}", key_res);
-                        if let Ok(keyid) = key_res {
-                            trace!("P256 KeyID: {:?} \n", &keyid.key);
-                        }
-
-                     });                   
-                     
-*/
-/*  
-                   trace!("Gen P256");
-                        let key_res = try_syscall!(cl.client.generate_key(Mechanism::P256, StorageAttributes::new()));
-                        trace!("P256: {:?}", key_res);
-                        if let Ok(keyid) = key_res {
-                            trace!("P256 KeyID: {:?} \n", &keyid.key);
-                        }
-
-*/
-/*  
-                       cl.lock(|cl| {
-                        trace!("Gen ed255_key_pair");
-                        let key_res = try_syscall!(cl.client.generate_key(Mechanism::Ed255, StorageAttributes::new()));
-                        trace!("Ed255 KeyID : {:?}", key_res);
-                        if let Ok(keyid) = key_res {
-                            trace!("Ed255 KeyID: {:?} \n", &keyid.key);
-                        }
-
-                       });
-          */         
-         
-
-                  
-
-
-//###############
-
-/*  
-                    cl.lock(|cl| {                      
-                 
-                        trace!("SE050 Test GENP256 &[0x20, 0xe8, 0xa1, 0x01]\n");
-                        let _rnd = try_syscall!(cl.client.random_bytes(30));
-                       
-                    });
-*/
-/* 
-
-                    cl.lock(|cl| {                      
-                   
-                        trace!("SE050 Test GENed255 &[0x20, 0xe8, 0xa1, 0x02]\n");
-                        let _rnd = try_syscall!(cl.client.random_bytes(40));
-                       
-                    });
-
- */
-/*  
-                    cl.lock(|cl| {                  
-                       
-                        trace!("SE050 Test GetRandom(50)");
-                        let _rnd = try_syscall!(cl.client.random_bytes(50));
-                        trace!("RND: {:?} \n", _rnd);
-
-                    });
-
- */
-
-
-/*  
-                if bs[0] != 0 {     
-
-                    //TEST getrandom
-                        cl.lock(|cl| {                  
-                       
-                            trace!("SE050 Test GetRandom(10)");
-                            let _rnd = try_syscall!(cl.client.random_bytes(50));
-                            trace!("RND: {:?} \n", _rnd);
-    
-                        });
-                                       
-                     }
-    
- */
-
-
-
- /*  
-                    //TEST delete
-                        cl.lock(|cl| {                  
-                       
-                            trace!("SE050 Test delete_secure_object(&[0x20, 0xe8, 0xa1, 0x02],");
-                            let _rnd = try_syscall!(cl.client.random_bytes(20));
-                            //trace!("RND: {:?} \n", _rnd);
-    
-                        });
-
-*/
