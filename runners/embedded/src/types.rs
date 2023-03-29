@@ -143,14 +143,15 @@ pub trait TrussedApp: Sized {
         let (trussed_requester, trussed_responder) =
             trussed::pipe::TrussedInterchange::claim().expect("could not setup TrussedInterchange");
 
-          #[cfg(feature = "hwcrypto_se050")]
+            #[cfg(feature = "hwcrypto_se050")]
         let client_backends =
             trussed::types::Vec::from_slice(&[trussed::types::ServiceBackends::SE050(trussed::service::backend_se050::Se050Parameters {}),
-                trussed::types::ServiceBackends::Software]); 
-         #[cfg(not(feature = "hwcrypto_se050"))] 
+                trussed::types::ServiceBackends::Software]);  
+           
+        #[cfg(not(feature = "hwcrypto_se050"))] 
         let client_backends =
             trussed::types::Vec::from_slice(&[trussed::types::ServiceBackends::Software]);
-
+ 
         let client_id = ClientContext::new(littlefs2::path::PathBuf::from(Self::CLIENT_ID), client_backends.unwrap());
         assert!(trussed.add_endpoint(trussed_responder, client_id).is_ok());
 
