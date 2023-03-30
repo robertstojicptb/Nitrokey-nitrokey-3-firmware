@@ -998,7 +998,7 @@ mod app {
  
 
     //#########################################################################################       
-           
+ /*           
                 //CRYPTO PRIMITIVES TEST 2 via trussed
 
                 // TEST of FUNCTION  get_random                
@@ -1017,12 +1017,73 @@ mod app {
 
                  }
   
-
+*/
  
+    //#########################################################################################       
+      
+                //CRYPTO PRIMITIVES TEST 3
 
-    
+                // TEST of FUNCTION  generate_p256_key, DELETE SECURE OBJECT, CHECK OBJECT EXIST
+
+                // Press Button 1 -> Testing of Function  generate_p256_key for object ids &[0x20, 0xe8, 0xa1, 0x01]]
+                // generate p256 key with &[0x03] - NIST P-256
+               
+                // Press Button 2  -> Testing of Function  delete_secure_object for object ids &[0x20, 0xe8, 0xa1, 0x01]                 
+               
+                // Press Button 3  -> Testing of Function check_object_exists for object id  &[0x20, 0xe8, 0xa1, 0x01]                 
+               
                  
                  
+              //###################################################
+
+                 if bs[1] != 0 {     
+              
+                //TEST SEO50 primitive  generate_p256_key for object ids &[0x20, 0xe8, 0xa1, 0x01] 
+	            // generate p256 key with &[0x03]) - NIST P-256 
+
+                cl.lock(|cl| {     
+                   
+                    trace!("SE050 Test GENP256 &[0x20, 0xe8, 0xa1, 0x01]");
+                    let _rnd = try_syscall!(cl.client.random_bytes(30));
+                           
+                   });
+
+                }
+
+            //###################################################
+                            
+            if bs[2] != 0 { 
+
+                //TEST SE050 primitive delete_secure_object(&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
+            cl.lock(|cl| 
+            
+            {  
+                trace!("SE050 Test  delete_secure_object(&[0x20, 0xe8, 0xa1, 0x01],\n");
+                let _rnd = try_syscall!(cl.client.random_bytes(10));
+
+            });
+         
+
+            }
+ 
+                //###################################################
+
+                //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
+
+                if bs[3] != 0 {     
+ 
+	                //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
+                    cl.lock(|cl| {                  
+                                        
+                        trace!("SE050 Test check_object_exist(&[0x20, 0xe8, 0xa1, 0x01],");
+                        let _rnd = try_syscall!(cl.client.random_bytes(1));
+                        trace!("Object Exist Result: {:?} \n", _rnd);
+
+                    });
+                   
+                     }
+
+             
  
  
          }
