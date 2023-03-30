@@ -1160,9 +1160,8 @@ mod app {
 
                 // TEST of FUNCTION  generate_ed255_key_pair, DELETE SECURE OBJECT, CHECK OBJECT EXIST
 
-                // Press Button 1 -> Testing of Function  generate_ed255_key_pai4 for object ids &[0x20, 0xe8, 0xa1, 0x02]]
-                // generate p256 key with &[0x03] - NIST P-256
-               
+                // Press Button 1 -> Testing of Function  generate_ed255_key_pair for object ids &[0x20, 0xe8, 0xa1, 0x02]]
+                             
                 // Press Button 2  -> Testing of Function  delete_secure_object for object ids &[0x20, 0xe8, 0xa1, 0x02]                 
                
                 // Press Button 3  -> Testing of Function check_object_exists for object id  &[0x20, 0xe8, 0xa1, 0x02]                 
