@@ -892,8 +892,9 @@ mod app {
              }
 */
 
-                // Press Button 0  -> Testing of Function  gett_random
+      //#########################################################################################       
                 
+             /*   
                 //CRYPTO PRIMITIVES TEST 1
 
                 // TEST of FUNCTION  WRITE_EC_KEY, DELETE SECURE OBJECT, CHECK OBJECT EXIST
@@ -987,10 +988,43 @@ mod app {
                     });                                     
                                                           
                      }
+*/
 
+    //#########################################################################################       
+           
+                //CRYPTO PRIMITIVES TEST 2 via trussed
+
+                // TEST of FUNCTION  get_random                
+
+                // Press Button 1 -> TEST SE050 primitive get_random(&mut bytes, self.delay);
+ 
+                 if bs[1] != 0 { 
+
+ 	            //TEST SE050 primitive get_random(&mut bytes, self.delay);
+
+                 cl.lock(|cl| {                      
+                    trace!("SE050 Test get_random");
+                    let _rnd = try_syscall!(cl.client.random_bytes(50));
+                    trace!("RND: {:?}", _rnd);  
+                   });
+
+                 }
+ 
          }
 
      }
+
+
+
+
+
+
+
+
+
+
+
+
 
  }
 
