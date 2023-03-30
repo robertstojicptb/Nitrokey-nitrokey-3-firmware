@@ -894,7 +894,7 @@ mod app {
 
       //#########################################################################################       
                 
-             /*   
+         
                 //CRYPTO PRIMITIVES TEST 1
 
                 // TEST of FUNCTION  WRITE_EC_KEY, DELETE SECURE OBJECT, CHECK OBJECT EXIST
@@ -909,30 +909,10 @@ mod app {
                
                 // Press Button 0  -> Testing of Function check_object_exists for object id  &[0x20, 0xe8, 0xa1, 0x02]                
                  
-                 if bs[1] != 0 { 
-
- 	                //TEST SE050 primitive delete_secure_object(&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
-                    cl.lock(|cl| 
-                    
-                    {  
-                        trace!("SE050 Test  delete_secure_object(&[0x20, 0xe8, 0xa1, 0x01],\n");
-                        let _rnd = try_syscall!(cl.client.random_bytes(10));
                  
-                    });
-
-		            //TEST SE050 primitive delete_secure_object(&[0x20, 0xe8, 0xa1, 0x02], self.delay,);
-                    cl.lock(|cl| {                  
-                       
-                        trace!("SE050 Test delete_secure_object(&[0x20, 0xe8, 0xa1, 0x02],\n");
-                        let _rnd = try_syscall!(cl.client.random_bytes(20));
-                      
-                    });
-
-                 }
-
               //###################################################
 
-                 if bs[3] != 0 {     
+                 if bs[1] != 0 {     
               
                 //TEST SEO50 primitive    write_ec_key(&mut bytes,&[0x20, 0xe8, 0xa1, 0x02],&[0x03], self.delay,);
 	            // generate p256 key with &[0x03]) - NIST P-256 
@@ -956,11 +936,36 @@ mod app {
 
                 }
 
+            //###################################################
+                            
+            if bs[2] != 0 { 
+
+                //TEST SE050 primitive delete_secure_object(&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
+            cl.lock(|cl| 
+            
+            {  
+                trace!("SE050 Test  delete_secure_object(&[0x20, 0xe8, 0xa1, 0x01],\n");
+                let _rnd = try_syscall!(cl.client.random_bytes(10));
+
+            });
+
+            //TEST SE050 primitive delete_secure_object(&[0x20, 0xe8, 0xa1, 0x02], self.delay,);
+            cl.lock(|cl| {                  
+                
+                trace!("SE050 Test delete_secure_object(&[0x20, 0xe8, 0xa1, 0x02],\n");
+                let _rnd = try_syscall!(cl.client.random_bytes(20));
+                
+            });
+
+            }
+
+
+
                 //###################################################
 
                 //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
 
-                if bs[2] != 0 {     
+                if bs[3] != 0 {     
  
 	                //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
                     cl.lock(|cl| {                  
@@ -988,7 +993,9 @@ mod app {
                     });                                     
                                                           
                      }
-*/
+ 
+
+/*  
 
     //#########################################################################################       
            
@@ -1009,6 +1016,16 @@ mod app {
                    });
 
                  }
+ 
+
+ */
+
+ 
+
+    
+                 
+                 
+ 
  
          }
 
