@@ -891,15 +891,29 @@ mod app {
                  ERL::soc::board::power_off();
              }
 */
-                //CRYPTO PRIMITIVES TEST
+
+                // Press Button 0  -> Testing of Function  gett_random
                 
-                 if bs[0] != 0 { 
+                //CRYPTO PRIMITIVES TEST 1
+
+                // TEST of FUNCTION  WRITE_EC_KEY, DELETE SECURE OBJECT, CHECK OBJECT EXIST
+
+                // Press Button 1 -> Testing of Function  write_ec_key for object ids &[0x20, 0xe8, 0xa1, 0x01] and &[0x20, 0xe8, 0xa1, 0x02]
+                // generate p256 key with &[0x03] - NIST P-256
+                // generate ed255 key with &[0x40] - ED255
+
+                // Press Button 2  -> Testing of Function  delete_secure_object for object ids &[0x20, 0xe8, 0xa1, 0x01] and &[0x20, 0xe8, 0xa1, 0x02]                
+               
+                // Press Button 3  -> Testing of Function check_object_exists for object id  &[0x20, 0xe8, 0xa1, 0x01]                 
+               
+                // Press Button 0  -> Testing of Function check_object_exists for object id  &[0x20, 0xe8, 0xa1, 0x02]                
+                 
+                 if bs[1] != 0 { 
 
  	                //TEST SE050 primitive delete_secure_object(&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
                     cl.lock(|cl| 
                     
                     {  
-
                         trace!("SE050 Test  delete_secure_object(&[0x20, 0xe8, 0xa1, 0x01],\n");
                         let _rnd = try_syscall!(cl.client.random_bytes(10));
                  
@@ -913,36 +927,40 @@ mod app {
                       
                     });
 
-
                  }
- 
 
-                 if bs[1] != 0 {      
+              //###################################################
 
-                
-                    cl.lock(|cl| {     
+                 if bs[3] != 0 {     
+              
+                //TEST SEO50 primitive    write_ec_key(&mut bytes,&[0x20, 0xe8, 0xa1, 0x02],&[0x03], self.delay,);
+	            // generate p256 key with &[0x03]) - NIST P-256 
 
-                    //TEST SE050 primitive generate_p256_key(self.delay);
-                    trace!("SE050 Test GENP256 &[0x20, 0xe8, 0xa1, 0x01]");
-                    let _rnd = try_syscall!(cl.client.random_bytes(30));
+                cl.lock(|cl| {     
+                    
+                    trace!("SE050 Test write_ec_key -generate p256 key &[0x20, 0xe8, 0xa1, 0x01],&[0x03],");                    
+                    let _rnd = try_syscall!(cl.client.random_bytes(3));
                            
                    });
                    
-                }
- 
-                if bs[2] != 0 {   
-
-                    //TEST SE050 primitive generate_ed255_key_pair(&[0x20, 0xe8, 0xa1, 0x02], self.delay,);
-                    cl.lock(|cl| {                      
-                    trace!("SE050 Test GENed255 &[0x20, 0xe8, 0xa1, 0x02]");
-                    let _rnd = try_syscall!(cl.client.random_bytes(40));
-                          
+              
+                //TEST SEO50 primitive    write_ec_key(&mut bytes,&[0x20, 0xe8, 0xa1, 0x02],&[0x03], self.delay,);
+	            // generate ed255 key with &[0x40] - ED255
+                cl.lock(|cl| {   
+                    
+                    trace!("SE050 Test write_ec_key - ed255 key   &[0x20, 0xe8, 0xa1, 0x02],&[0x40],");
+                    let _rnd = try_syscall!(cl.client.random_bytes(4));
+                           
                    });
-                   
+
                 }
 
-                if bs[3] != 0 {     
+                //###################################################
 
+                //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
+
+                if bs[2] != 0 {     
+ 
 	                //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
                     cl.lock(|cl| {                  
                                         
@@ -951,28 +969,30 @@ mod app {
                         trace!("Object Exist Result: {:?} \n", _rnd);
 
                     });
+                   
+                     }
+
+                //###################################################
+
+                //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x02], self.delay,);
+
+                if bs[0] != 0 {     
 
                     cl.lock(|cl| {                  
                                         
                         trace!("SE050 Test check_object_exist(&[0x20, 0xe8, 0xa1, 0x02],");
-                        let _rnd = try_syscall!(cl.client.random_bytes(1));
+                        let _rnd = try_syscall!(cl.client.random_bytes(2));
                         trace!("Object Exist Result: {:?} \n", _rnd);
 
-                    });
-                                       
+                    });                                     
+                                                          
                      }
- 
-
 
          }
 
- 
      }
 
-
-     
  }
-
 
 }
 
