@@ -1306,6 +1306,112 @@ mod app {
 
 
 
+ //################################################################################
+
+  
+                //CRYPTO PRIMITIVES TEST  5 READ SECURE BOJECT FOR p256 key
+
+                // TEST of FUNCTION  read_secure_object, generate_p256_key , DELETE SECURE OBJECT, CHECK OBJECT EXIST
+
+                // Press Button 1 -> Testing of Function  generate_p256_key   for object ids &[0x20, 0xe8, 0xa1, 0x01]]
+                             
+                // Press Button 2  -> Testing of Function  delete_secure_object for object ids &[0x20, 0xe8, 0xa1, 0x01]                 
+               
+                // Press Button 3  -> Testing of Function check_object_exists for object id  &[0x20, 0xe8, 0xa1, 0x01]                 
+               
+                  // Press Button 0  -> Testing of Function read_secure_object for object id  &[0x20, 0xe8, 0xa1, 0x01]                 
+               
+                 
+                 
+              //###################################################
+
+                 if bs[1] != 0 {     
+               
+                    //TEST SE050 primitive generate_p256_key   for object ids &[0x20, 0xe8, 0xa1, 0x01]
+                        
+                    cl.lock(|cl| {                      
+                    trace!("SE050 Test GENP256 &[0x20, 0xe8, 0xa1, 0x01]");
+                    let _rnd = try_syscall!(cl.client.random_bytes(30));
+                                
+                   });
+
+
+                }
+
+            //###################################################
+                            
+            if bs[2] != 0 { 
+
+                //TEST SE050 primitive delete_secure_object(&[0x20, 0xe8, 0xa1, 0x02], self.delay,);
+            cl.lock(|cl| 
+            
+            {  
+                trace!("SE050 Test  delete_secure_object(&[0x20, 0xe8, 0xa1, 0x02],\n");
+                let _rnd = try_syscall!(cl.client.random_bytes(10));
+
+            });
+         
+
+            }
+ 
+                //###################################################
+
+                //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x01], self.delay,);
+
+                if bs[3] != 0 {     
+ 
+	                //TEST SE050 primitive  check_object_exists(&mut bytes,&[0x20, 0xe8, 0xa1, 0x021], self.delay,);
+                    cl.lock(|cl| {                  
+                                        
+                        trace!("SE050 Test check_object_exist(&[0x20, 0xe8, 0xa1, 0x02],");
+                        let _rnd = try_syscall!(cl.client.random_bytes(1));
+                      
+
+                    });
+                   
+                     }
+   
+//###################################################
+
+                //TEST SE050 primitive  read_secure_object_ &[0x20, 0xe8, 0xa1, 0x01] 
+
+                if bs[0] != 0 {     
+ 
+	                 
+                    cl.lock(|cl| {                  
+                                        
+                        trace!("SE050 Test read_secure_object_ &[0x20, 0xe8, 0xa1, 0x01] ");
+                        let _rnd = try_syscall!(cl.client.random_bytes(65));
+                        trace!("RND: {:?}", _rnd);  
+
+                    });
+                   
+                     }
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
          }
 
      }
